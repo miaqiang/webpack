@@ -1,0 +1,11 @@
+
+
+
+# Dependency directories
+node_modules
+
+collect-notes
+
+.idea
+
+_book
