@@ -14,16 +14,28 @@ webpac4.35 基本配置
 
 #### dev模式实现
 
+<<<<<<< HEAD
 1.devServer    
 2.处理scss与css文件    
 3.热加载      
+=======
+1.devServer
+2.处理scss与css文件
+3.热加载   
+>>>>>>> 3a08c0a06c805c162bc881d09ccb2ac73f82e00c
 
 
 ### prod模式实现
 
+<<<<<<< HEAD
 1.单独打包css文件    
 2.压缩css文件   
 3.输出文件带contenthash，优化加载        
+=======
+1.单独打包css文件
+2.压缩css文件
+3.输出文件带contenthash，优化加载
+>>>>>>> 3a08c0a06c805c162bc881d09ccb2ac73f82e00c
 
 
 
