@@ -11,6 +11,13 @@ webpac4.35 基本配置
 3.解析ES6语法    
 4.处理图片与字体    
 5.代码分离 
+6.dll提取
+7.多页面配置
+
+react(16.8.8)+redux(7.1)+react-router(5.0.1)配置
+接口请求使用axios
+
+
 
 ### dev模式实现
 
@@ -27,84 +34,7 @@ webpac4.35 基本配置
 2.压缩css文件    
 3.输出文件带contenthash，优化加载    
 
-## common 代码
-
-### webpack.dev.js
 ```
-const path=require('path');
-const HtmlWebpackPlugin=require('html-webpack-plugin');//html生成插件
-const {CleanWebpackPlugin}=require('clean-webpack-plugin');//清理生成文件的插件
-const webpack=require('webpack');
-
-module.exports={
-	//入口
-	entry:{
-		index:'./src/index.js',
-	},
-	//模块
-	module:{
-		rules:[{
-				//处理.js文件
-				test:/.js$/,
-				include:path.resolve(__dirname,'../src'),
-				use:[{
-					loader:'babel-loader'
-				}]
-			},{
-				//处理图片
-				test:/\.(jpg|png|gif)$/,
-				use:{
-					loader:'url-loader',
-					options:{
-						name:'[name]_[hash].[ext]',
-						outputPath:'images/',
-						limit:10240
-					}
-				},
-			},{
-				//处理字体
-				test:/\.(eot|ttf|svg)$/,
-				use:{
-					loader:'file-loader'
-				}
-			}]
-	},
-	//插件
-	plugins:[
-		//生成一个HTML文件
-		new HtmlWebpackPlugin({
-			//原始模板文件
-			template:'src/index.html'
-		}),
-		//清除上次生成的dist里的内容
-		new CleanWebpackPlugin()
-	],
-	//优化
-	optimization:{
-		//将包含chunks 映射关系的 list单独从 app.js里提取出
-		runtimeChunk:{
-			name:'runtime'
-		},
-		//只打包用到的代码
-		usedExports:true,
-		splitChunks:{
-			chunks:'all',//同步异步都进行代码分离
-			cacheGroups:{
-				vendors:{
-					test:/[\\/]node_modules[\\/]/,
-					priority:-10,
-					name:'vendors',
-				}
-			}
-		}
-	},
-	//性能
-	performance:false,
-	//出口
-	output:{
-		path:path.resolve(__dirname,'../dist'),
-	},
-}
 /**
  * 备注
  *

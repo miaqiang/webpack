@@ -1,54 +1,49 @@
-const MiniCssExtractPlugin=require('mini-css-extract-plugin');//单独打包css
-const OptimizeCSSAssetsPlugin=require('optimize-css-assets-webpack-plugin');//压缩css文件
-const merge=require('webpack-merge');//webpack配置的合并
-const commonConfig=require('./webpack.common.js');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const merge = require('webpack-merge');
+const commonConfig = require('./webpack.common.js');
 
-const prodConfig={
-	mode:'production',
-	//devtool:'cheap-module-source-map',
-	module:{
+const prodConfig = {
+	mode: 'production',
+	devtool: 'cheap-module-source-map',
+	module: {
 		rules:[{
-			//处理scss
-			test:/\.scss$/,
-			use:[
-				 MiniCssExtractPlugin.loader,
-				//'style-loader',
+			test: /\.scss$/,
+			use: [
+				MiniCssExtractPlugin.loader, 
 				{
-					loader:'css-loader',
-					options:{
-						importLoaders:1
+					loader: 'css-loader',
+					options: {
+						importLoaders: 2
 					}
 				},
 				'sass-loader',
 				'postcss-loader'
 			]
-		},{
-			//处理css
-			test:/\.css$/,
-			use:[
+		}, {
+			test: /\.css$/,
+			use: [
 				MiniCssExtractPlugin.loader,
 				'css-loader',
 				'postcss-loader'
 			]
 		}]
 	},
-	//优化
-	optimization:{
-		//压缩
-		minimizer:[new OptimizeCSSAssetsPlugin({})]
+	optimization: {
+		minimizer: [new OptimizeCSSAssetsPlugin({})]
 	},
-	//插件
-	plugins:[
+	plugins: [
 		new MiniCssExtractPlugin({
-			filename:'[name].css',
-			chunkFilename:'[name].chunk.css'
-		})
+			filename: 'style/[name].css',
+			chunkFilename: 'style/[name].chunk.css'
+		}),
+		new CleanWebpackPlugin()
 	],
-	//输出
-	output:{
-		filename:'[name].[contenthash].js',//对应entry的name，contenthash为内容的hash值
-		chunkFilename:'[name].[contenthash].js'////对应chunk的name，contenthash为内容的hash值
+	output: {
+		filename: 'scripts/[name].[contenthash].js',
+		chunkFilename: 'scripts/[name].[contenthash].js'
 	}
 }
 
-module.exports=merge(commonConfig,prodConfig);
+module.exports = merge(commonConfig, prodConfig);

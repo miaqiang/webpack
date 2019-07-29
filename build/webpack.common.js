@@ -1,84 +1,87 @@
-const path=require('path');
-const HtmlWebpackPlugin=require('html-webpack-plugin');//html生成插件
-const {CleanWebpackPlugin}=require('clean-webpack-plugin');//清理生成文件的插件
-const webpack=require('webpack');
+const path = require('path');
+const fs=require('fs');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const AddAssetHtmlWebpackPlugin=require('add-asset-html-webpack-plugin');
+const webpack = require('webpack');
 
-module.exports={
-	//入口
-	entry:{
-		index:'./src/index.js',
+
+const plugins=[
+	new HtmlWebpackPlugin({
+		template: 'src/htmlTemplate/index.html',
+		filename:"index.html",
+		chunks:['runtime','vendors','index']
+	})
+];
+
+
+const files= fs.readdirSync(path.resolve(__dirname, '../dll'));
+files.forEach(file => {
+	if(/.*\.dll.js/.test(file)) {
+		plugins.push(new AddAssetHtmlWebpackPlugin({
+			filepath: path.resolve(__dirname, '../dll', file)
+		}))
+	}
+	if(/.*\.manifest.json/.test(file)) {
+		plugins.push(new webpack.DllReferencePlugin({
+			manifest: path.resolve(__dirname, '../dll', file)
+		}))
+	}
+})
+
+module.exports = {
+	entry: {
+		index: './src/pages/index/index.js',
+		// header:'./src/index.js',
 	},
-	//模块
-	module:{
-		rules:[{
-				//处理.js文件
-				test:/.js$/,
-				include:path.resolve(__dirname,'../src'),
-				use:[{
-					loader:'babel-loader'
-				}]
-			},{
-				//处理图片
-				test:/\.(jpg|png|gif)$/,
-				use:{
-					loader:'url-loader',
-					options:{
-						name:'[name]_[hash].[ext]',
-						outputPath:'images/',
-						limit:10240
-					}
-				},
-			},{
-				//处理字体
-				test:/\.(eot|ttf|svg)$/,
-				use:{
-					loader:'file-loader'
-				}
+	resolve: {
+		extensions: ['.js', '.jsx'],
+		/*alias: {
+			child: path.resolve(__dirname, '../src/a/b/c/child')
+		}*/
+	},
+	module: {
+		rules: [{ 
+			test: /\.jsx?$/, 
+			include: path.resolve(__dirname, '../src'),
+			use: [{
+				loader: 'babel-loader'
 			}]
-	},
-	//插件
-	plugins:[
-		//生成一个HTML文件
-		new HtmlWebpackPlugin({
-			//原始模板文件
-			template:'src/index.html'
-		}),
-		//清除上次生成的dist里的内容
-		new CleanWebpackPlugin()
-	],
-	//优化
-	optimization:{
-		//将包含chunks 映射关系的 list单独从 app.js里提取出
-		runtimeChunk:{
-			name:'runtime'
-		},
-		//只打包用到的代码
-		usedExports:true,
-		splitChunks:{
-			chunks:'all',//同步异步都进行代码分离
-			cacheGroups:{
-				vendors:{
-					test:/[\\/]node_modules[\\/]/,
-					priority:-10,
-					name:'vendors',
+		}, {
+			test: /\.(jpg|png|gif)$/,
+			use: {
+				loader: 'url-loader',
+				options: {
+					name: '[name]_[hash].[ext]',
+					outputPath: 'images/',
+					limit: 10240
 				}
-			}
-		}
-
+			} 
+		}, {
+			test: /\.(eot|ttf|svg)$/,
+			use: {
+				loader: 'file-loader'
+			} 
+		}]
 	},
-	//性能
-	performance:false,
-	//出口
-	output:{
-		path:path.resolve(__dirname,'../dist'),
+	plugins: plugins,
+	optimization: {
+		runtimeChunk: {
+			name: 'runtime'
+		},
+		usedExports: true,
+		splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+      	vendors: {
+      		test: /[\\/]node_modules[\\/]/,
+      		priority: -10,
+      		name: 'vendors',
+      	}
+      }
+    }
 	},
+	performance: false,
+	output: {
+		path: path.resolve(__dirname, '../dist')
+	}
 }
-
-
-
-/**
- * 备注
- *
- *
- * 1.通过 package.json 的 "sideEffects" 属性作为标记，向 compiler 提供提示，表明项目中的哪些文件是 "pure(纯的 ES2015 模块)"，由此可以安全地删除文件中未使用的部分。
- */
