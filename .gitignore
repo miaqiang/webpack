@@ -6,3 +6,5 @@ collect-notes
 
 .idea
 .history
+/dist
+.dll

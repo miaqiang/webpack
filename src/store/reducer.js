@@ -1,25 +1,17 @@
-// import { combineReducers } from 'redux-immutable';
-import { combineReducers } from 'redux'
-/*import { reducer as headerReducer } from '../common/header/store';
-import { reducer as homeReducer } from '../pages/home/store';
-import { reducer as detailReducer } from '../pages/detail/store';
-import { reducer as loginReducer } from '../pages/login/store';*/
 
-function menuStateShow(state=true,action){
-	switch (action.type){
-		case 'menuStateShow':
-		return action.state;
-		default:
-		return state;
+import { combineReducers } from 'redux'
+
+function contentMinHeight(state = 0, action) {
+	if (action.type == "contentMinHeight") {
+		let height=action.contentMinHeight;
+		height=height<360?360:height;
+	  return height;
 	}
+	return state;
 }
 
 const reducer = combineReducers({
-	menuStateShow:menuStateShow
-/*	header: headerReducer,
-	home: homeReducer,
-	detail: detailReducer,
-	login: loginReducer*/
+	contentMinHeight:contentMinHeight
 });
 
 export default reducer;

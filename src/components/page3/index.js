@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Iframe from '../../common/iframe'
 
-class Page2 extends PureComponent {
+class Page3 extends PureComponent {
 	componentDidMount() {
 
 	}
@@ -10,11 +10,10 @@ class Page2 extends PureComponent {
 	}
 	
 	render() {
-
 		return (
 			<div>
-				page2
-			{/* <Iframe title="page2" location={this.props.location}> </Iframe> */}
+				page3
+			{/* <Iframe title="page3" location={this.props.location}> </Iframe> */}
 			</div>
 		)
 	}
@@ -26,4 +25,4 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
 });
 
-export default connect(mapState, mapDispatch)(Page2);
+export default connect(mapState, mapDispatch)(Page3);

@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
 
+let target='http://10.109.23.159:8083';//小明电脑
+
 
 const devConfig = {
 	mode: 'development',
@@ -11,28 +13,25 @@ const devConfig = {
 		open: true,
 		port: 3000,
 		hot: true,
-		 // publicPath: 'http://localhost:3000/build/',
+		 proxy: {
+            '/': target
+        }
 	},
 	module: {
 		rules: [{
 			test: /\.scss$/,
 			use: [
 				'style-loader', 
-				{
-					loader: 'css-loader',
-					options: {
-						importLoaders: 2
-					}
-				},
-				'sass-loader',
-				'postcss-loader'
+				'css-loader?sourceMap',
+				'sass-loader?sourceMap',
+				'postcss-loader?sourceMap'
 			]
 		}, {
 			test: /\.css$/,
 			use: [
-				'style-loader',
-				'css-loader',
-				'postcss-loader'
+				'style-loader?sourceMap',
+				'css-loader?sourceMap',
+				'postcss-loader?sourceMap'
 			]
 		}]
 	},

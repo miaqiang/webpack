@@ -1,15 +1,17 @@
-import 'whatwg-fetch';
-import Cookies from 'js-cookie';
 
-export function doFetch({url,data={},type='GET',responseType,ContentType='application/json;charset=utf-8'}){
+import axios from 'axios';
+const PATH='/sjzx';
+
+function doAxios({url,data={},type='GET',responseType,ContentType='application/json;charset=utf-8'}){
+
 	let options = {
-		  credentials: 'include',
-		  headers: {
-		    'accept': 'application/json',
-		    'Content-Type':ContentType,
-		    'Cache-Control':'no-store'
-		  }
-	};
+		credentials: 'include',
+		headers: {
+		  'accept': 'application/json',
+		  'Content-Type':ContentType,
+		  'Cache-Control':'no-store'
+		}
+  };
 
 	if (type.toLocaleUpperCase() === 'GET') {
 		let dataStr = ''; //数据拼接字符串
@@ -24,28 +26,36 @@ export function doFetch({url,data={},type='GET',responseType,ContentType='applic
 	}else{
 		options.body = JSON.stringify(data);
 	}
-	if (url.indexOf("?") >= 0) {//判断url中是否已经带有参数
-		 // url = url + "&t=" + (new Date()).valueOf();
-	} else {
-		 // url = url + "?t=" + (new Date()).valueOf();
-	}
-	options.method = type;
 
-	return fetch(url,options).then((response)=>{
-		Cookies.set('last_request_time',Date.now());
+	return axios(url,options).then((response)=>{
+
+		console.log('responsesssss',response);
+
+
+		return response.data;
+		// Cookies.set('last_request_time',Date.now());
 		return responseType=='text' ? response.text() : response.json();
 	});
 }
 
-
-
-
 export function isLogin(response){
-	console.log('hello world')
 	if(response.code == 401){
-		location.href = 'index.html';
+		console.log('未登录')	
 	}
 	return response;
 }
 
-export const fetchChongqingMap = (data) =>doFetch({url:`./src/javascript/plugin/chongqing.json`,type:'GET'}).then(isLogin);
+
+//1. 获取当前用户
+export const axiosCurrentuser = (data) =>doAxios({url:PATH+`/api/v1/currentuser`,type:'GET'}).then(isLogin);
+
+//2. 获取所有应用得入口地址
+export const axiosAppentry = (data) =>doAxios({url:PATH+`/api/v1/appentry`,type:'GET'}).then(isLogin);
+
+
+//3. 退出登陆
+export const axiosLogout = (data) =>doAxios({url:PATH+`/api/v1/logout`,type:'GET'}).then(isLogin);
+
+//4.获取bi配置
+export const axiosBi = (data) =>doAxios({url:PATH+`/api/v1/bi`,type:'GET'}).then(isLogin);
+

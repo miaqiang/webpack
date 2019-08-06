@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const merge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
 
@@ -31,14 +32,35 @@ const prodConfig = {
 		}]
 	},
 	optimization: {
-		minimizer: [new OptimizeCSSAssetsPlugin({})]
+		minimizer: [new OptimizeCSSAssetsPlugin({}),
+		 	new UglifyJsPlugin(
+			
+				{
+					uglifyOptions: {
+					warnings: false,
+				 	compress: {
+						drop_debugger:true,
+						drop_console:true
+					},
+				}
+			}
+		) 
+			/* new UglifyJsPlugin({
+				/* uglifyOptions: {
+					warnings: false,
+				 	compress: {
+						drop_debugger:true,
+						drop_console:true
+					}, */
+			/*}, */
+			/*}) */]
 	},
 	plugins: [
+		new CleanWebpackPlugin(),
 		new MiniCssExtractPlugin({
 			filename: 'style/[name].css',
 			chunkFilename: 'style/[name].chunk.css'
 		}),
-		new CleanWebpackPlugin()
 	],
 	output: {
 		filename: 'scripts/[name].[contenthash].js',
