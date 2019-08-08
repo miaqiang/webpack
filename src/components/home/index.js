@@ -17,7 +17,7 @@ class Page1 extends PureComponent {
 	render() {
 		return (
 			<div>
-				hello page1
+				hello page1  QM
 				<Switch>
 						<Route path='/page1/page6'  component={Page2}></Route>
  

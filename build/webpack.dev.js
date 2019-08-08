@@ -9,13 +9,18 @@ const devConfig = {
 	mode: 'development',
 	devtool: 'cheap-module-eval-source-map',
 	devServer: {
-		contentBase: './dist',
+		// contentBase: './dist',
 		open: true,
 		port: 3000,
 		hot: true,
-		 proxy: {
-            '/': target
-        }
+		headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "*",
+		},
+		// publicPath: 'http://localhost:3000/dist/',
+		proxy: {
+		'/': target
+	}
 	},
 	module: {
 		rules: [{
@@ -41,6 +46,7 @@ const devConfig = {
 	output: {
 		filename: 'scripts/[name].js',
 		chunkFilename: 'scripts/[name].js',
+		publicPath:"http://localhost:3000/"
 	}
 }
 

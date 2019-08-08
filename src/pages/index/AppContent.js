@@ -55,7 +55,7 @@ class App extends Component {
                         <Route path='/page2' exact component={Page2}></Route> 
                         <Route path='/page3' exact component={Page3}></Route>
                         <Route path='/page4' exact component={Page4}></Route>
-                        {/* <Redirect path='/'  to='/page2' ></Redirect>  */}
+                        <Redirect path='/'  to='/page2' ></Redirect>
                    </Switch>
                 </div>
                 

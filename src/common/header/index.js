@@ -93,8 +93,8 @@ class Header  extends React.Component {
 		this.getCurrent=this.getCurrent.bind(this);
 	}
 	componentWillMount(){
-		/* this.getUrl();
-		this.getCurrent(); */
+		 this.getUrl();
+		/*this.getCurrent(); */
 	}
 	componentDidMount(){
 
