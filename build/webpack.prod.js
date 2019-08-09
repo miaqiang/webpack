@@ -12,11 +12,17 @@ const prodConfig = {
 		rules:[{
 			test: /\.scss$/,
 			use: [
-				MiniCssExtractPlugin.loader, 
+				{
+					loader: MiniCssExtractPlugin.loader,
+					options: {
+					  publicPath: '../',
+				
+					},
+				  }, 
 				{
 					loader: 'css-loader',
 					options: {
-						importLoaders: 2
+						importLoaders: 2,
 					}
 				},
 				'sass-loader',
@@ -25,7 +31,15 @@ const prodConfig = {
 		}, {
 			test: /\.css$/,
 			use: [
-				MiniCssExtractPlugin.loader,
+				{
+					loader: MiniCssExtractPlugin.loader,
+					options: {
+					  // you can specify a publicPath here
+					  // by default it uses publicPath in webpackOptions.output
+					  publicPath: '../',
+					  hmr: process.env.NODE_ENV === 'development',
+					},
+				  },
 				'css-loader',
 				'postcss-loader'
 			]

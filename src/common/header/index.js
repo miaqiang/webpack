@@ -93,7 +93,7 @@ class Header  extends React.Component {
 		this.getCurrent=this.getCurrent.bind(this);
 	}
 	componentWillMount(){
-		 this.getUrl();
+		 /* this.getUrl(); */
 		/*this.getCurrent(); */
 	}
 	componentDidMount(){
@@ -196,6 +196,10 @@ class Header  extends React.Component {
 
 				<nav className="leftNav">
 					<ul>
+					<li key={0}>
+                        <a href="http://www.baidu.com" >微服务API</a>
+                        <span className="separate-short"></span>
+                    </li>
 						{url}
 					</ul>
 				</nav>

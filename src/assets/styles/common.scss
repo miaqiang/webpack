@@ -1,16 +1,23 @@
 @import "variables.scss";
+/* //@import "../font/font.scss"; */
 
+@font-face{
+    font-family: "NotoSansCJK";
+    //src: url('../font/NotoSansCJKsc-Regular.otf');
+    src: url('../font/NotoSansCJKsc-Regular.otf');
+  }
 body {
     margin: 0;
     padding: 0;
-    font-family: microsoft yahei;
+    font-family: NotoSansCJK;
     //font-size:12px;
     position: absolute;
     top: 0px;
     right: 0px;
     bottom: 0px;
     left: 0px;
-    font-size: $font-size-base;
+    //font-size: $font-size-base;
+    font-size: 14px;
 }
 html{
     font-family: "微软雅黑";

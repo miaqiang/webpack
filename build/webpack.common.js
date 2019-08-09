@@ -62,7 +62,7 @@ const configs = {
 		}, {
 			test: /\.(jpg|png|gif)$/,
 			use: {
-				loader: 'url-loader',
+				loader: 'file-loader',
 				options: {
 					name: '[name]_[hash].[ext]',
 					outputPath: 'images/',
@@ -70,9 +70,14 @@ const configs = {
 				}
 			} 
 		}, {
-			test: /\.(eot|ttf|svg)$/,
+			test: /\.(otf|eot|ttf|svg)$/,
 			use: {
-				loader: 'file-loader'
+				loader: 'url-loader',
+				options: {
+					name: 'font/[name].[ext]',
+					// outputPath: 'style/',
+					limit: 10240
+				}
 			} 
 		}]
 	},

@@ -37,7 +37,8 @@ const devConfig = {
 				'style-loader?sourceMap',
 				'css-loader?sourceMap',
 				'postcss-loader?sourceMap'
-			]
+			],
+			include:/src/ ,
 		}]
 	},
 	plugins: [
