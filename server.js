@@ -1,25 +1,19 @@
 const express = require('express')
 const proxy = require('http-proxy-middleware');
 const path = require('path')
-const port = 3002
+const port = 8082
 const app = express()
 
-//3480
-// var target = 'http://demo189.test.com:8089';
-
-let target='http://10.109.23.159:8083';//小明电脑
+//4.1.0.0
+var target = 'http://demo220.test.com:8089';
+var target = "http://demo312.test.com:8070";
+var target = "http://demo188.test.com:8070";
 // serve static assets normallyroles/delete
-
-
-app.all('*', function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  //Access-Control-Allow-Headers ,可根据浏览器的F12查看,把对应的粘贴在这里就行
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  res.header('Access-Control-Allow-Methods', '*');
-  res.header('Content-Type', 'application/json;charset=utf-8');
-  next();
-});
-
+//镜宇
+//var target = 'http://10.109.16.156:8089';//vm41.leap.com 开发环境
+//var target='http://10.109.4.93:8070';//vm41.leap.com 开发环境
+//var target = "http://vm31.leap.com:8070";
+//var target="http://10.109.4.93:8089";
 app.use(express.static(__dirname + '/'))
 
 
@@ -28,7 +22,7 @@ app.use(express.static(__dirname + '/'))
 // a script tag to your application's JavaScript file(s).
 const broserHistory = true;
 
-app.use('/', proxy({target: target}));
+app.use('/', proxy({ target: target }));
 
 /*if(broserHistory)
     app.get('*', function (request, response){
@@ -36,5 +30,5 @@ app.use('/', proxy({target: target}));
   })*/
 
 app.listen(port)
-console.log("hello world",__dirname);
+console.log("hello world", __dirname);
 console.log("server started on port " + port)

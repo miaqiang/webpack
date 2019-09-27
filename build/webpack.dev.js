@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
 
-let target='http://10.109.23.159:8083';//小明电脑
+let target = 'http://10.109.23.159:8083';//小明电脑
 
 
 const devConfig = {
@@ -10,35 +10,35 @@ const devConfig = {
 	devtool: 'cheap-module-eval-source-map',
 	devServer: {
 		// contentBase: './dist',
-		open: true,
-		port: 3000,
+		//open: true,
+		port: 8081,
 		hot: true,
 		headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "*",
+			"Access-Control-Allow-Origin": "*",
+			"Access-Control-Allow-Methods": "*",
 		},
 		// publicPath: 'http://localhost:3000/dist/',
-		proxy: {
-		'/': target
-	}
+		/* proxy: {
+			'/': target
+		} */
 	},
 	module: {
 		rules: [{
-			test: /\.scss$/,
+			test: /\.less$/,
 			use: [
-				'style-loader', 
+				'style-loader',
 				'css-loader?sourceMap',
-				'sass-loader?sourceMap',
-				'postcss-loader?sourceMap'
+				//'postcss-loader?sourceMap',
+				'less-loader?sourceMap',
 			]
 		}, {
 			test: /\.css$/,
 			use: [
 				'style-loader?sourceMap',
+				//'postcss-loader?sourceMap',
 				'css-loader?sourceMap',
-				'postcss-loader?sourceMap'
 			],
-			include:/src/ ,
+			//include: /src/,
 		}]
 	},
 	plugins: [
@@ -47,7 +47,7 @@ const devConfig = {
 	output: {
 		filename: 'scripts/[name].js',
 		chunkFilename: 'scripts/[name].js',
-		publicPath:"http://localhost:3000/"
+		publicPath: "http://localhost:8081/"
 	}
 }
 
