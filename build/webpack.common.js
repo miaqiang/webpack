@@ -19,7 +19,7 @@ const makePlugins = (configs) => {
 	Object.keys(configs.entry).forEach(item => {
 		plugins.push(
 			new HtmlWebpackPlugin({
-				template: './template.html',
+				template: './src/htmlTemplate/index.html',
 				filename: `../${item}.html`,
 				chunks: ['runtime', 'vendors', item]
 			})
@@ -47,7 +47,7 @@ const makePlugins = (configs) => {
 
 const configs = {
 	entry: {
-		index: './app/index.js',
+		index: './src/pages/index.js',
 		// header:'./src/index.js',
 	},
 	resolve: {
