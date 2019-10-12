@@ -63,22 +63,6 @@ const configs = {
 				// include: path.resolve(__dirname, '../src'),
 				use: [{
 					loader: 'babel-loader',
-					options: {
-						//publicPath: '../',
-						"presets": [
-							["@babel/preset-env",
-								/* {
-									"useBuiltIns": "usage",
-									"corejs": 2,
-									//"modules": 'auto'
-								} */
-
-							],
-
-							"@babel/preset-react"
-						],
-						"plugins": ["@babel/plugin-proposal-class-properties", "@babel/plugin-syntax-dynamic-import"]
-					}
 				}]
 			}, {
 				test: /\.(jpg|png|gif|jpeg)$/,
@@ -87,7 +71,22 @@ const configs = {
 					options: {
 						name: 'images/[name]_[hash].[ext]',
 						//outputPath: 'images/',
-						publicPath: '../',
+						publicPath: process.env.NODE_ENV == "production" ? '../' : "",
+						/* 
+						开启server，dev模式时
+						css文件和js文件打包在一起的，没有进行分离
+						publickPath为"../"的话，会以当前浏览器的访问地址为根路径
+						访问地址会是，http://localhost:8082/pm/../images/xxx.png
+						publickPath为""时，访问地址会以output里的publicPath地址为准
+						访问地址会是：http://localhost:8083/images/xxx.png
+
+						build模式时,
+						css文件单独提取出来，在dist/style文件
+						publicPath为"",会以当前css文件的路径为根路径，
+						访问地址是：http:8082/pm/dist/style/dist/images/xxx.png;
+						publicPath为"",会以当前css文件的路径的上一级为根路径，
+						访问地址是：http:8082/pm/dist/images/xx.png;
+						 */
 						limit: 10240
 					}
 				}
@@ -98,7 +97,22 @@ const configs = {
 					options: {
 						name: 'fonts/[name].[ext]',
 						// outputPath: 'style/',
-						publicPath: '../',
+						publicPath: process.env.NODE_ENV == "production" ? '../' : "",
+						/* 
+						开启server，dev模式时
+						css文件和js文件打包在一起的，没有进行分离
+						publickPath为"../"的话，会以当前浏览器的访问地址为根路径
+						访问地址会是，http://localhost:8082/pm/../images/xxx.png
+						publickPath为""时，访问地址会以output里的publicPath地址为准
+						访问地址会是：http://localhost:8083/images/xxx.png
+
+						build模式时,
+						css文件单独提取出来，在dist/style文件
+						publicPath为"",会以当前css文件的路径为根路径，
+						访问地址是：http:8082/pm/dist/style/dist/images/xxx.png;
+						publicPath为"",会以当前css文件的路径的上一级为根路径，
+						访问地址是：http:8082/pm/dist/images/xx.png;
+						 */
 						limit: 10240
 					}
 				}

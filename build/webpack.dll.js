@@ -6,10 +6,10 @@ module.exports = {
 	entry: {
 		// vendors: ['react', 'react-dom', "react-router", "react-codemirror"],
 		jquery: ['jquery'],
-		react: ['react', 'react-dom', "react-router"],
+		react: ['react', 'react-dom', "react-router", "react-redux"],
 		echarts: ["./components/common/echarts"],
 		bootstrap: ["bootstrap", "bootstrap-datepicker"],
-		redux: ["react-redux", "redux"],
+		redux: ["redux"],
 	},
 	output: {
 		filename: '[name].dll.js',
