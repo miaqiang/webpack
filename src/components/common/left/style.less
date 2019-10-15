@@ -1,0 +1,59 @@
+@import "~src/assets/styles/variables.less";
+
+.left-menu {
+    .item-wrap {
+        color: red;
+        list-style: none;
+        padding: 0;
+        line-height: 60px;
+        color: #81B3C4;
+        font-size: @font-size-large;
+
+        .item {
+            border-left: solid 3px #FFF;
+            /* padding-left:67px; */
+            height: 60px;
+            overflow: hidden;
+            position: relative;
+
+
+            &.user {
+                a {
+                    background: #FFFFFF url('@{imgUrl}/left/user.png') 18px center no-repeat;
+                }
+
+                &.current {
+                    a {
+                        background: #EEEEEF url('@{imgUrl}/left/user.png') 18px center no-repeat;
+                    }
+                }
+            }
+
+            &.current {
+                border-color: @left-current-border;
+                color: @left-current-color;
+                background-color: @left-current-bg;
+
+                a {
+                    color: @left-current-color;
+                }
+            }
+
+            a {
+                position: absolute;
+                text-decoration: none;
+                color: #5f656f;
+                ;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 20;
+
+                span {
+                    margin-left: 60px;
+                }
+            }
+        }
+    }
+}

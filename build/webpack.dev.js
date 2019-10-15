@@ -2,25 +2,28 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
 
-let target = 'http://10.109.23.159:8083';//小明电脑
-
+let target = 'http://vm31.leap.com:8070"';//vm31
 
 const devConfig = {
 	mode: 'development',
 	devtool: 'cheap-module-eval-source-map',
 	devServer: {
 		// contentBase: './dist',
-		//open: true,
+
 		port: 8081,
 		hot: true,
 		headers: {
 			"Access-Control-Allow-Origin": "*",
 			"Access-Control-Allow-Methods": "*",
 		},
-		// publicPath: 'http://localhost:3000/dist/',
-		/* proxy: {
-			'/': target
-		} */
+
+		//contentBase: './',
+		open: true,//利用devServer实现代理，缺点：只有开发模式能够使用
+		publicPath: 'http://localhost:8081/',
+		openPage: 'dev.html',
+		proxy: {
+			'/leapid-admin': target,
+		}
 	},
 	module: {
 		rules: [{
@@ -29,7 +32,12 @@ const devConfig = {
 				'style-loader',
 				'css-loader?sourceMap',
 				//'postcss-loader?sourceMap',
-				'less-loader?sourceMap',
+				{
+					loader: 'less-loader?sourceMap',
+					options: {
+						javascriptEnabled: true
+					}
+				}
 			]
 		}, {
 			test: /\.css$/,
@@ -43,6 +51,15 @@ const devConfig = {
 	},
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
+		new webpack.ProvidePlugin({
+			$: "jquery",
+			jquery: "jquery",
+			"windows.jQuery": "jquery",
+			jQuery: "jquery",
+			React: 'react',
+			Cookies: "js-cookie",
+
+		}),
 	],
 	output: {
 		filename: 'scripts/[name].js',

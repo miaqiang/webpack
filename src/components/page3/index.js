@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import Iframe from '../../common/iframe'
 
 class Page3 extends PureComponent {
 	componentDidMount() {
@@ -8,12 +7,11 @@ class Page3 extends PureComponent {
 	}
 	componentWillUnmount() {
 	}
-	
+
 	render() {
 		return (
 			<div>
 				page3
-			{/* <Iframe title="page3" location={this.props.location}> </Iframe> */}
 			</div>
 		)
 	}

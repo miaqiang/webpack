@@ -13,13 +13,16 @@ const makePlugins = (configs) => {
 			"windows.jQuery": "jquery",
 			jQuery: "jquery",
 			React: 'react',
-			Cookies: "js-cookie"
+			ReactRedux: 'react-redux',
+			Cookies: "js-cookie",
+
+
 		}),
 	];
 	Object.keys(configs.entry).forEach(item => {
 		plugins.push(
 			new HtmlWebpackPlugin({
-				template: './src/htmlTemplate/index.html',
+				template: './public/template.html',
 				filename: `../${item}.html`,
 				chunks: ['runtime', 'vendors', item]
 			})
@@ -52,9 +55,9 @@ const configs = {
 	},
 	resolve: {
 		extensions: ['.js', '.jsx'],
-		/*alias: {
-			child: path.resolve(__dirname, '../src/a/b/c/child')
-		}*/
+		alias: {
+			'src': path.resolve(__dirname, '../src')
+		}
 	},
 	module: {
 		rules: [

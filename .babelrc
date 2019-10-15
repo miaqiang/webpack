@@ -3,10 +3,17 @@
 		[
 			"@babel/preset-env", {
 				"useBuiltIns": "usage",
-				"corejs": 2
+				"corejs": 3
 			}
 		],
 		"@babel/preset-react"
 	],
-	"plugins": ["@babel/plugin-syntax-dynamic-import"]
+	"plugins": [
+		"@babel/plugin-syntax-dynamic-import",
+		["babel-plugin-import", {
+			"libraryName": "antd",
+			"libraryDirectory": "es",
+			"style": true // `style: true` 会加载 less 文件
+		}]
+	]
 }

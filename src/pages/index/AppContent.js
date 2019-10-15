@@ -1,18 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import { connect } from 'react-redux';
-import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
-import Header from '../../common/header';
-import Left from '../../common/left';
-import Home from '../../components/home';
-import Page2 from '../../components/page2';
-import Page3 from '../../components/page3';
-import Page4 from '../../components/page4';
 
-import '../../assets/styles/common.less'
-/*import Detail from './pages/detail/loadable.js';
-import Login from './pages/login';
-import Write from './pages/write';
-*/
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
+import Header from 'src/components/common/header';
+import Left from 'src/components/common/left';
+import Home from 'src/components/home';
+/* import Page2 from 'src/components/page2';
+import Page3 from 'src/components/page3';
+import Page4 from 'src/components/page4'; */
+
+
+import 'src/assets/styles/common.less'
+
+const Page2 = lazy(() => import('src/components/page2'));
+const Page3 = lazy(() => import('src/components/page3'));
+const Page4 = lazy(() => import('src/components/page4'));
+
+
 
 // QM 2019/7/31
 
@@ -50,18 +54,20 @@ class App extends Component {
           <Left location={this.props.location} />
           <div className="right-content">
             <div className="mainContainer" style={{ minHeight: this.state.contentMinHeight + "px" }}>
-              <Switch>
-                <Route path='/page1' component={Home}></Route>
-                <Route path='/page2' exact component={Page2}></Route>
-                <Route path='/page3' exact component={Page3}></Route>
-                <Route path='/page4' exact component={Page4}></Route>
-                <Redirect path='/' to='/page2' ></Redirect>
-              </Switch>
+              <Suspense fallback={<div>loading...</div>}>
+                <Switch>
+                  <Route path='/page1' component={Home}></Route>
+                  <Route path='/page2' exact component={Page2}></Route>
+                  <Route path='/page3' exact component={Page3}></Route>
+                  <Route path='/page4' exact component={Page4}></Route>
+                  <Redirect path='/' to='/page2' ></Redirect>
+                </Switch>
+              </Suspense>
             </div>
 
           </div>
         </div>
-      </div>
+      </div >
 
     );
   }

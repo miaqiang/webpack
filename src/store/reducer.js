@@ -1,17 +1,15 @@
 
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
+import reducers1 from './reducer1';
+import reducers2 from './reducer2';
 
-function contentMinHeight(state = 0, action) {
-	if (action.type == "contentMinHeight") {
-		let height=action.contentMinHeight;
-		height=height<360?360:height;
-	  return height;
-	}
-	return state;
-}
 
-const reducer = combineReducers({
-	contentMinHeight:contentMinHeight
-});
+
+let reducers = Object.assign({},
+	reducers1,
+	reducers2);
+
+console.log('reducers', reducers);
+const reducer = combineReducers(reducers);
 
 export default reducer;

@@ -25,7 +25,14 @@ const prodConfig = {
 							importLoaders: 2,
 						} */
 					},
-					'less-loader',
+					{
+						loader: 'less-loader',
+						options: {
+							javascriptEnabled: true
+						}
+					}
+
+
 					//'postcss-loader'
 				]
 			}, {
